@@ -97,7 +97,7 @@ const CreateProperty = () => {
               <input
                 type="text"
                 name="title"
-                className="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="labelinput"
                 id="title"
                 placeholder="Title..."
                 onChange={handleInput}
@@ -110,7 +110,7 @@ const CreateProperty = () => {
               <input
                 type="number"
                 name="price"
-                className="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="labelinput"
                 id="price"
                 placeholder="Price..."
                 onChange={handleInput}
@@ -123,7 +123,7 @@ const CreateProperty = () => {
               <input
                 type="number"
                 name="bedrooms"
-                className="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="labelinput"
                 id="bedrooms"
                 placeholder="Bedrooms..."
                 onChange={handleInput}
@@ -136,7 +136,7 @@ const CreateProperty = () => {
               <input
                 type="number"
                 name="bathrooms"
-                className="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="labelinput"
                 id="bathrooms"
                 placeholder="Bathrooms..."
                 onChange={handleInput}
@@ -149,7 +149,7 @@ const CreateProperty = () => {
               <input
                 type="text"
                 name="address"
-                className="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="labelinput"
                 id="address"
                 placeholder="Address..."
                 onChange={handleInput}
@@ -162,7 +162,7 @@ const CreateProperty = () => {
               <input
                 type="text"
                 name="city"
-                className="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="labelinput"
                 id="city"
                 placeholder="City..."
                 onChange={handleInput}
@@ -174,7 +174,7 @@ const CreateProperty = () => {
               <label htmlFor="description" className="label">Description</label>
               <textarea
                 name="description"
-                className="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="labelinput"
                 id="description"
                 placeholder="Description..."
                 onChange={handleInput}
@@ -188,7 +188,7 @@ const CreateProperty = () => {
                 type="file"
                 name="image1"
                 id="image1"
-                className="input-file mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="input-file mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
                 onChange={imageHandle}
               />
             </div>
@@ -199,7 +199,7 @@ const CreateProperty = () => {
                 type="file"
                 name="image2"
                 id="image2"
-                className="input-file mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="input-file mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 "
                 onChange={imageHandle}
               />
             </div>
@@ -210,7 +210,7 @@ const CreateProperty = () => {
                 type="file"
                 name="image3"
                 id="image3"
-                className="input-file mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="input-file mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
                 onChange={imageHandle}
               />
             </div>
@@ -221,7 +221,7 @@ const CreateProperty = () => {
                 type="checkbox"
                 name="furnished"
                 id="furnished"
-                className="form-checkbox mt-1"
+                className="form-checkbox mt-2 checked:bg-black checked:border-transparent focus:ring-gray-500 h-6 w-6 "
                 onChange={handleInput}
                 checked={state.furnished}
               />
@@ -233,7 +233,7 @@ const CreateProperty = () => {
                 type="checkbox"
                 name="parking"
                 id="parking"
-                className="form-checkbox mt-1"
+                className="form-checkbox mt-2 checked:bg-black checked:border-transparent focus:ring-gray-500 h-6 w-6 "
                 onChange={handleInput}
                 checked={state.parking}
               />
@@ -245,7 +245,7 @@ const CreateProperty = () => {
                 type="checkbox"
                 name="security"
                 id="security"
-                className="form-checkbox mt-1"
+                className="form-checkbox mt-2 checked:bg-black checked:border-transparent focus:ring-gray-500 h-6 w-6 "
                 onChange={handleInput}
                 checked={state.security}
               />
@@ -253,7 +253,7 @@ const CreateProperty = () => {
 
             <div className="w-full p-3">
               <label htmlFor="map" className="label">Location</label>
-              <Map onLocationChange={handleLocationChange} /> {/* Custom Map component */}
+              <Map onLocationChange={handleLocationChange} /> 
             </div>
 
             <div className="w-full p-3">

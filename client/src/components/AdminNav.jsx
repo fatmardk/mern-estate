@@ -18,7 +18,7 @@ const AdminNav = () => {
   const handleLogout = () => {
     dispatch(logout('adminToken'));
     localStorage.removeItem('admin-token');
-    navigate('/adminlogin');
+    navigate('/login-admin');
   };
 
   // Admin token yoksa hiçbir şey render etme
@@ -57,8 +57,12 @@ const AdminNav = () => {
       {menuOpen && (
         <div className="md:hidden absolute top-14 left-0 right-0 bg-black bg-opacity-70 p-4">
           <ul className="flex flex-col items-center space-y-4">
+            <Link to="/admin/new-property">
             <li className="cursor-pointer text-white relative menu">New Property</li>
+            </Link>
+            <Link to="/admin/all-property">
             <li className="cursor-pointer text-white relative menu">View Properties</li>
+            </Link>
           </ul>
         </div>
       )}

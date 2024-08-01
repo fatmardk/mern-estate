@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
-  width: '100%',
-  height: '400px',
+  width: '80%',
+  height: '300px',
 };
 
 const defaultCenter = {
-  lat: 37.00128949807853,
-  lng: 35.321856358738025,
+  lat: 40.712776,
+  lng: -74.005974,
 };
 
 const Map = ({ onLocationChange }) => {
@@ -24,7 +24,7 @@ const Map = ({ onLocationChange }) => {
   };
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyBSqj8GDLTGN6UDmKCwOe8svNXvly1CMJw">
+    <LoadScript googleMapsApiKey="AIzaSyCrLImoaYlRxEqZhf3ZUKdH1qh_oqDikBE">
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={location}
