@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, version } from "react";
 import '../../style/Nav.css';
 import { logout } from "../store/reducers/authReducer";
 
@@ -10,14 +10,12 @@ const AdminNav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   const handleLogout = () => {
     dispatch(logout('adminToken'));
-    localStorage.removeItem('admin-token');
     navigate('/login-admin');
   };
 

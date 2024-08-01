@@ -1,20 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import '../../style/Nav.css';
+import "../../style/Nav.css";
 import { logout } from "../store/reducers/authReducer";
 
 const Nav = () => {
   const { userToken, user } = useSelector((state) => state.authReducer);
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   const handleLogout = () => {
-    dispatch(logout('token'));
+    dispatch(logout("userToken"));
+    navigate("/login");
   };
 
   return (
@@ -28,10 +30,18 @@ const Nav = () => {
         </div>
         <div className="flex items-center space-x-4 md:space-x-10">
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="#" className="cursor-pointer text-white relative menu">Loans</Link>
-            <Link to="#" className="cursor-pointer text-white relative menu">Sell</Link>
-            <Link to="#" className="cursor-pointer text-white relative menu">Rent</Link>
-            <Link to="#" className="cursor-pointer text-white relative menu">Buy</Link>
+            <Link to="#" className="cursor-pointer text-white relative menu">
+              Loans
+            </Link>
+            <Link to="#" className="cursor-pointer text-white relative menu">
+              Sell
+            </Link>
+            <Link to="#" className="cursor-pointer text-white relative menu">
+              Rent
+            </Link>
+            <Link to="#" className="cursor-pointer text-white relative menu">
+              Buy
+            </Link>
           </div>
           {userToken ? (
             <>
@@ -40,7 +50,10 @@ const Nav = () => {
                   {user?.name}
                 </Link>
               </li>
-              <li className="list-none text-white relative cursor-pointer menu" onClick={handleLogout}>
+              <li
+                className="list-none text-white relative cursor-pointer menu"
+                onClick={handleLogout}
+              >
                 Logout
               </li>
             </>

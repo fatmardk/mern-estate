@@ -1,13 +1,20 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import axios from "axios";
+import { useUserLoginMutation } from "../../store/services/authService";
+import { useDispatch } from "react-redux";
+import { setUserToken } from "../../store/reducers/authReducer";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
+
+  const dispatch = useDispatch();
+
+  const [login, response] = useUserLoginMutation();
 
   const { email, password } = formData;
   const navigate = useNavigate();
@@ -19,23 +26,35 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:8080/api/login', formData);
-      console.log(res.data);
-      // Token'ı yerel depolamada sakla
-      localStorage.setItem('token', res.data.token);
-      // Giriş başarılı olduğunda kullanıcıyı /home sayfasına yönlendirin
-      navigate('/home');
+      await login(formData);
     } catch (err) {
       console.error(err.response.data);
     }
   };
 
+  useEffect(() => {
+    if (response.isSuccess) {
+      dispatch(setUserToken(response.data?.token));
+      localStorage.setItem('userToken', response.data?.token);
+      navigate('/home')
+    };
+  }, [response.isSuccess]);
+
+
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('/homebg.jpg')" }}>
+    <div
+      className="relative flex items-center justify-center min-h-screen bg-cover bg-center"
+      style={{ backgroundImage: "url('/homebg.jpg')" }}
+    >
       <div className="absolute inset-0 bg-black/30"></div>
 
       <div className="absolute top-4 right-4">
-        <Link to="/login-admin" className="px-4 py-2 border rounded-md text-white backdrop-blur-sm hover:bg-white hover:text-black transition 200">Admin Page</Link>
+        <Link
+          to="/login-admin"
+          className="px-4 py-2 border rounded-md text-white backdrop-blur-sm hover:bg-white hover:text-black transition 200"
+        >
+          Admin Page
+        </Link>
       </div>
 
       <motion.div
@@ -70,12 +89,16 @@ const Login = () => {
             <button
               type="submit"
               className="w-full px-4 py-2 font-bold text-white border rounded hover:bg-white/50 transition 200 hover:border-3 shadow-inner"
+              disabled={response.isLoading ? true : false}
             >
               Login
             </button>
           </form>
           <p className="mt-4 text-white">
-            Do not have an account? <Link to="/register" className="text-blue-400">Register</Link>
+            Do not have an account?{" "}
+            <Link to="/register" className="text-blue-400">
+              Register
+            </Link>
           </p>
         </div>
       </motion.div>

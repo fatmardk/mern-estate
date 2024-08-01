@@ -20,6 +20,7 @@ const loginUser = async (req, res) => {
     if (user && await comparePassword(password, user.password)) {
       const token = await createToken(user);
       res.status(200).json({ message: "Login successful", token });
+      
     } else {
       res.status(401).json({ message: 'Invalid credentials' });
     }
