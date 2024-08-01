@@ -20,4 +20,21 @@ const getPropertyById = async (id) => {
   return rows[0];
 };
 
-module.exports = { createProperty, getPropertyById };
+const updateProperty = async (id, updates) => {
+  const fields = Object.keys(updates).map(key => `${key} = ?`).join(', ');
+  const values = Object.values(updates);
+  values.push(id);
+
+  const [result] = await connection.execute(
+    `UPDATE properties SET ${fields} WHERE id = ?`,
+    values
+  );
+  return result;
+};
+
+const deleteProperty = async (id) => {
+  const [result] = await connection.execute('DELETE FROM properties WHERE id = ?', [id]);
+  return result;
+};
+
+module.exports = { createProperty, getPropertyById, updateProperty, deleteProperty };

@@ -1,22 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {jwtDecode} from 'jwt-decode'; // Doğru içe aktarma
+import {jwtDecode} from 'jwt-decode';
+
+const customerToken = localStorage.getItem('userToken');
+const adminToken = localStorage.getItem('admin-token');
 
 function verifyToken(keyName) {
   const storage = localStorage.getItem(keyName);
   if (storage) {
-    try {
-      const decodedToken = jwtDecode(storage);
-      const expiresIn = new Date(decodedToken.exp * 1000);
+    const decodedToken = jwtDecode(storage);
+    const expiresIn = new Date(decodedToken.exp * 1000);
 
-      if (new Date() > expiresIn) {
-        localStorage.removeItem(keyName);
-        return null;
-      } else {
-        return storage;
-      }
-    } catch (error) {
+    if (new Date() > expiresIn) {
       localStorage.removeItem(keyName);
       return null;
+    } else {
+      return storage;
     }
   } else {
     return null;
@@ -27,28 +25,29 @@ const authReducer = createSlice({
   name: 'authReducer',
   initialState: {
     adminToken: verifyToken('admin-token'),
-    userToken: verifyToken('token'),
-    user: localStorage.getItem('token') ? jwtDecode(localStorage.getItem('token')) : null,
+    userToken: verifyToken('userToken'),
+    admin: adminToken ? jwtDecode(adminToken) : null,
+    user: customerToken ? jwtDecode(customerToken) : null,
   },
   reducers: {
     setAdminToken: (state, action) => {
       state.adminToken = action.payload;
-      localStorage.setItem('admin-token', action.payload); // Token'ı kaydet
+      state.admin = jwtDecode(action.payload);
     },
     setUserToken: (state, action) => {
       state.userToken = action.payload;
       state.user = jwtDecode(action.payload);
-      localStorage.setItem('userToken', action.payload); // Token'ı kaydet
     },
     logout: (state, { payload }) => {
       localStorage.removeItem(payload);
-      if (payload === 'token') {
-        state.token = null;
+      if (payload === 'admin-token') {
+        state.adminToken = null;
+        state.admin = null;
       } else if (payload === 'userToken') {
         state.userToken = null;
         state.user = null;
       }
-    }
+    },
   },
 });
 
