@@ -25,7 +25,7 @@ const AdminNav = () => {
   if (!adminToken) return null;
 
   return (
-    <nav className="bg-black bg-opacity-0 p-4 fixed top-0 left-0 right-0 z-50">
+    <nav className="bg-black bg-opacity-0 p-4 absolute top-0 left-0 right-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/admin" className="text-white text-lg font-semibold relative menu">
           Home

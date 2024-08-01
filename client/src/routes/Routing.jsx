@@ -5,6 +5,7 @@ import Adminlogin from "../pages/auth/Adminlogin"
 import Contact from "../pages/auth/Contact";
 import UserHome from "../pages/dashboard/UserHome";
 import AdminHome from "../pages/dashboard/AdminHome";
+import CreateProperty from "../pages/dashboard/CreateProperties";
 const Routing = () => {
   return (
     <BrowserRouter>
@@ -15,6 +16,7 @@ const Routing = () => {
     <Route path="/home" element={<UserHome/>}/>
     <Route path="/login-admin" element={<Adminlogin/>}/>
     <Route path="/admin" element={<AdminHome/>}/>
+    <Route path="/admin/new-property" element={<CreateProperty/>}/>
     <Route path="/contact" element={<Contact/>}/>
     </Routes>
 
