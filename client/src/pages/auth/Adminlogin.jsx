@@ -39,13 +39,13 @@ const Adminlogin = () => {
   }, [response, dispatch, navigate]);
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('/homebg.jpg')" }}>
+    <div className="relative flex items-center justify-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('/formbg.jpg')" }}>
       <div className="absolute top-4 right-4">
         <Link to="/login" className="px-4 py-2 border rounded-md text-white backdrop-blur-sm hover:bg-white hover:text-black transition 200">User Page</Link>
       </div>
 
       <motion.div initial={{ opacity: 0, x: "-100vw" }} animate={{ opacity: 1, x: 0 }}>
-        <div className="relative flex flex-col items-center justify-center w-[400px] max-w-md p-8 bg-opacity-10 border border-white rounded-lg backdrop-blur-sm">
+        <div className="relative flex flex-col items-center justify-center w-[400px] max-w-md p-8 bg-opacity-10 border border-white rounded-lg backdrop-blur-md bg-black/30">
           <h1 className="mb-6 text-2xl font-bold text-white">Admin Login</h1>
           <form className="w-full space-y-4" onSubmit={AdminLoginFunction}>
             <div>
@@ -53,7 +53,7 @@ const Adminlogin = () => {
               <input
                 type="text"
                 name="email"
-                className="w-full px-4 py-2 mt-1 text-white bg-black bg-opacity-30 border border-white rounded focus:outline-none focus:ring-2 focus:ring-slate-50 focus:border-transparent"
+                className="w-full px-4 py-2 mt-1 text-white bg-white bg-opacity-30 border border-white rounded focus:outline-none focus:ring-2 focus:ring-slate-50 focus:border-transparent placeholder:text-gray-700"
                 onChange={handleInputs}
                 value={state.email}
                 placeholder="Enter your email"
@@ -64,7 +64,7 @@ const Adminlogin = () => {
               <input
                 type="password"
                 name="password"
-                className="w-full px-4 py-2 mt-1 mb-3 text-white bg-black bg-opacity-30 border border-white rounded focus:outline-none focus:ring-2 focus:ring-slate-50 focus:border-transparent"
+                className="w-full px-4 py-2 mt-1 mb-3 text-white bg-white bg-opacity-30 border border-white rounded focus:outline-none focus:ring-2 focus:ring-slate-50 focus:border-transparent placeholder:text-gray-700"
                 onChange={handleInputs}
                 value={state.password}
                 placeholder="Enter your password"

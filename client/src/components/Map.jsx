@@ -1,12 +1,10 @@
 import { useState } from "react";
-
 import {
   GoogleMap,
   InfoWindow,
   useLoadScript,
   Marker,
 } from "@react-google-maps/api";
-
 import Spinner from "../components/Spinner";
 
 const MapDash = ({ center }) => {
@@ -33,16 +31,11 @@ const MapDash = ({ center }) => {
   const place = {
     id: 1,
     coordinates: {
-      lat: "37.05490978325893",
-      lng: "35.2881369799229",
+      lat: 37.05490978325893,
+      lng: 35.2881369799229,
     },
     name: "Sercan Restaurant",
   };
-
-  // const center = {
-  //   lat: 37.0012220691501,
-  //   lng: 35.32191010386118,
-  // };
 
   return (
     <>
@@ -72,9 +65,7 @@ const MapDash = ({ center }) => {
               onCloseClick={handleCloseInfoWindow}
             >
               <div>
-                <h3>Place : {selectedPlace.name}</h3>
-                {/* <p>Stop Description: {selectedPlace.stop_desc}</p> */}
-                {/* <p>Stop Code: {selectedStop.stop_code}</p> */}
+                <h3>Place: {selectedPlace.name}</h3>
                 <p>
                   Location: ({selectedPlace.coordinates.lat},
                   {selectedPlace.coordinates.lng})
