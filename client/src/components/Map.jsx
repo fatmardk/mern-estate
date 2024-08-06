@@ -1,77 +1,51 @@
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   GoogleMap,
-  InfoWindow,
   useLoadScript,
-  Marker,
+  MarkerF,
 } from "@react-google-maps/api";
-import Spinner from "../components/Spinner";
 
-const MapDash = ({ center }) => {
+const Map = ({ onLocationChange }) => {
   const apiKey = "AIzaSyCrLImoaYlRxEqZhf3ZUKdH1qh_oqDikBE";
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
   });
 
-  const [selectedPlace, setSelectedPlace] = useState();
+  const [marker, setMarker] = useState(null);
 
   const containerStyle = {
-    width: "60%",
+    width: "100%",
     height: "50vh",
   };
 
-  const handleMarkerClick = (place) => {
-    setSelectedPlace(place);
-  };
+  const handleMapClick = useCallback((event) => {
+    const newMarker = {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    };
 
-  const handleCloseInfoWindow = () => {
-    setSelectedPlace();
-  };
-
-  const place = {
-    id: 1,
-    coordinates: {
-      lat: 37.05490978325893,
-      lng: 35.2881369799229,
-    },
-    name: "Sercan Restaurant",
-  };
+    setMarker(newMarker);
+    onLocationChange(newMarker.lat, newMarker.lng);
+  }, [onLocationChange]);
 
   return (
     <>
       {!isLoaded ? (
-        <Spinner />
+        <div>Loading...</div>
       ) : (
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={center || { lat: 37.00128949807853, lng: 35.321856358738025 }} // Use the provided center or a default value
+          center={{ lat: 40.74857878612249, lng: -73.98561626666985 }}
           zoom={15}
+          onClick={handleMapClick}
         >
-          <Marker
-            key={place.id}
-            position={{
-              lat: Number(place.coordinates.lat),
-              lng: Number(place.coordinates.lng),
-            }}
-            onClick={() => handleMarkerClick(place)}
-          />
-
-          {selectedPlace && (
-            <InfoWindow
+          {marker && (
+            <MarkerF
               position={{
-                lat: Number(selectedPlace.coordinates.lat),
-                lng: Number(selectedPlace.coordinates.lng),
+                lat: marker.lat,
+                lng: marker.lng,
               }}
-              onCloseClick={handleCloseInfoWindow}
-            >
-              <div>
-                <h3>Place: {selectedPlace.name}</h3>
-                <p>
-                  Location: ({selectedPlace.coordinates.lat},
-                  {selectedPlace.coordinates.lng})
-                </p>
-              </div>
-            </InfoWindow>
+            />
           )}
         </GoogleMap>
       )}
@@ -79,4 +53,4 @@ const MapDash = ({ center }) => {
   );
 };
 
-export default MapDash;
+export default Map;

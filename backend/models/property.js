@@ -1,19 +1,32 @@
+const connectDB = require('../config/db');
 const connection = require('../config/db');
 
 const createProperty = async (property) => {
-  const [result] = await connection.execute(
-    `INSERT INTO properties (title, description, address, city, price, bedrooms, bathrooms, image1, image2, image3, location_type, longitude, latitude, furnished, parking, security) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Point', ?, ?, ?, ?, ?)`,
-    [
-      property.title, property.description, property.address, property.city,
-      property.price, property.bedrooms, property.bathrooms, property.image1,
-      property.image2, property.image3, property.location.coordinates[0],
-      property.location.coordinates[1], property.furnished, property.parking,
-      property.security
-    ]
-  );
-  return result.insertId;
+  const connection = await connectDB();
+  if (!property.location || !property.location.coordinates || property.location.coordinates.length !== 2) {
+    throw new Error("Invalid location data");
+  }
+
+  try {
+    const [result] = await connection.execute(
+      `INSERT INTO properties (title, description, address, city, price, bedrooms, bathrooms, image1, image2, image3, location_type, longitude, latitude, furnished, parking, security, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Point', ?, ?, ?, ?, ?, NOW(), NOW())`,
+      [
+        property.title, property.description, property.address, property.city,
+        property.price, property.bedrooms, property.bathrooms, property.image1,
+        property.image2, property.image3, property.location.coordinates[0],
+        property.location.coordinates[1], property.furnished, property.parking,
+        property.security
+      ]
+    );
+    console.log('Property inserted with ID:', result.insertId);
+    return result.insertId;
+  } catch (error) {
+    console.error('Error inserting property:', error.message);
+    throw new Error('Error saving property');
+  }
 };
+
 
 const getPropertyById = async (id) => {
   const [rows] = await connection.execute('SELECT * FROM properties WHERE id = ?', [id]);
@@ -32,9 +45,9 @@ const updateProperty = async (id, updates) => {
   return result;
 };
 
-const deleteProperty = async (id) => {
+const deletePropertyFromModel = async (id) => {
   const [result] = await connection.execute('DELETE FROM properties WHERE id = ?', [id]);
   return result;
 };
 
-module.exports = { createProperty, getPropertyById, updateProperty, deleteProperty };
+module.exports = { createProperty, getPropertyById, updateProperty, deletePropertyFromModel };

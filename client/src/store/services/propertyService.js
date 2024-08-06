@@ -15,10 +15,10 @@ const propertyService = createApi({
   }),
   endpoints: (builder) => ({
     createProperty: builder.mutation({
-      query: (data) => ({
-        url: 'new-property',
+      query: (FormData) => ({
+        url: 'admin/new-property',
         method: 'POST',
-        body: data,
+        body: FormData,
       }),
       invalidatesTags: ['properties'],
     }),

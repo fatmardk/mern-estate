@@ -4,7 +4,7 @@ const colors = require('colors');
 const connect = require('./config/db');
 const cors = require('cors');
 const userRoute = require('./routes/userRoute');
-// const propertyRoute = require('./routes/propertyRoute');
+const propertyRoute = require('./routes/propertyRoutes');
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/api', userRoute);
-// app.use('/api/properties', propertyRoute);
+app.use('/api', propertyRoute);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
