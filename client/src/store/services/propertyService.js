@@ -19,32 +19,41 @@ const propertyService = createApi({
         method: 'POST',
         body: formData,
       }),
-      // Invalidates the cache when creating a new property
+      // Optionally add invalidation if required
+      // invalidatesTags: ['Property'],
     }),
     getProperties: builder.query({
-      query: () =>({ 
-        url:'admin/properties',
-        method:'GET',
-      })
-      
+      query: () => ({
+        url: 'admin/properties',
+        method: 'GET',
+      }),
+      // Optionally add tags for invalidation
+      // providesTags: ['Property'],
     }),
     getProperty: builder.query({
-      query: (id) => `properties/${id}`,
+      query: (id) => ({
+        url: `properties/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Property']
     }),
+    
     updateProperty: builder.mutation({
-      query: (data) => ({
-        url: 'properties/update',
+      query: ({ id, data }) => ({
+        url: `admin/properties/edit/${id}`,
         method: 'PUT',
         body: data,
       }),
-      // Invalidates the cache when updating a property
+      // Optionally add invalidation if required
+      // invalidatesTags: ['Property'],
     }),
     deleteProperty: builder.mutation({
       query: (id) => ({
         url: `admin/properties/delete/${id}`,
         method: 'DELETE',
       }),
-      // Invalidates the cache when deleting a property
+      // Optionally add invalidation if required
+      // invalidatesTags: ['Property'],
     }),
   }),
 });

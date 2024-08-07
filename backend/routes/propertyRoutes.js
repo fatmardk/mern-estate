@@ -6,8 +6,8 @@ const { addProperty, getProperty, editProperty, deleteProperty,fetchAllPropertie
 router.post('/admin/new-property',addProperty);
 
 router.get('/properties/:id', getProperty);
-router.put('admin/properties/:id', editProperty);
-router.delete('admin/properties/delete/:id', deleteProperty);
+router.put('/admin/properties/edit/:id', editProperty);
+router.delete('/admin/properties/delete/:id', deleteProperty);
 router.get('/admin/properties', fetchAllProperties);
 
 module.exports = router;

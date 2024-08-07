@@ -96,9 +96,7 @@ const addProperty = async (req,res) => {
 
 const fetchAllProperties = async (req, res) => {
   try {
-    console.log('Fetching all properties...');
     const properties = await getAllProperties();
-    console.log('Properties:', properties);
     if (properties.length > 0) {
       res.status(200).json(properties);
     } else {
@@ -127,7 +125,6 @@ const getProperty = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 const editProperty = async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
@@ -143,30 +140,15 @@ const editProperty = async (req, res) => {
   }
 };
 
+
 const deleteProperty = async (req, res) => {
   const { id } = req.params;
   try {
-    // Property'yi ID'ye göre bul ve sil
-    const property = await PropertyModel.findByIdAndDelete(id);
-    
-    if (property) {
-      // İlgili resimleri sil
-      const __dirname = path.resolve();
-      ['image1', 'image2', 'image3'].forEach((image) => {
-        if (property[image]) {
-          const imagePath = __dirname + `/../client/public/house/${property[image]}`;
-          fs.unlink(imagePath, (err) => {
-            if (err) console.error(`Error deleting ${image}:`, err);
-          });
-        }
-      });
-
+    const result = await deletePropertyFromModel(id); 
       return res.status(200).json({ message: 'Property deleted successfully' });
-    } else {
-      return res.status(404).json({ message: 'Property not found' });
-    }
+    
   } catch (error) {
-    console.error("Error deleting property:", error);
+    console.error('Error deleting property:', error.message);
     return res.status(500).json({ message: error.message });
   }
 };

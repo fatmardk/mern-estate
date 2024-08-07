@@ -42,21 +42,26 @@ const getPropertyById = async (id) => {
 
 const updateProperty = async (id, updates) => {
   const connection = await connectDB();
-  const fields = Object.keys(updates).map(key => `${key} = ?`).join(', ');
-  const values = Object.values(updates);
-  values.push(id);
-
   try {
+    // Construct the SET clause dynamically
+    const fields = Object.keys(updates).map(key => `${key} = ?`).join(', ');
+    const values = [...Object.values(updates), id]; // Append the id to the end of values array
+
+    // Execute the update query
     const [result] = await connection.execute(
       `UPDATE properties SET ${fields} WHERE id = ?`,
       values
     );
-    return result;
+
+    return result; // Return result to check the outcome in controller
   } catch (error) {
-    console.error('Error updating property:', error.message);
-    throw new Error('Error updating property');
+    throw new Error(`Error updating property: ${error.message}`);
+  } finally {
+    connection.end(); // Ensure connection is closed
   }
 };
+
+
 
 const deletePropertyFromModel = async (id) => {
   const connection = await connectDB();
@@ -71,9 +76,7 @@ const deletePropertyFromModel = async (id) => {
 const getAllProperties = async () => {
   try {
     const connection = await connectDB();
-    console.log('Executing query to get all properties...');
     const [rows] = await connection.execute('SELECT * FROM properties');
-    console.log('Query result:', rows);
     return rows;
   } catch (error) {
     console.error('Error executing query:', error.message);

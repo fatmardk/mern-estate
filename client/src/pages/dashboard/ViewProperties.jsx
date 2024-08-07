@@ -78,7 +78,7 @@ const Properties = () => {
                     <div className="flex justify-between mt-4">
                       <button
                         className="btn btn-warning"
-                        onClick={() => alert(`Edit ${property.id}`)} // Placeholder for edit action
+                        onClick={() =>navigate(`/admin/properties/edit/${property.id}`)}
                       >
                         Edit
                       </button>
