@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const propertyService = createApi({
-  reducerPath: 'properties',
-  tagTypes: ['properties'],
+  reducerPath: 'propertyService',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:8080/api/',
     prepareHeaders: (headers, { getState }) => {
@@ -15,26 +14,22 @@ const propertyService = createApi({
   }),
   endpoints: (builder) => ({
     createProperty: builder.mutation({
-      query: (FormData) => ({
+      query: (formData) => ({
         url: 'admin/new-property',
         method: 'POST',
-        body: FormData,
+        body: formData,
       }),
-      invalidatesTags: ['properties'],
+      // Invalidates the cache when creating a new property
     }),
     getProperties: builder.query({
-      query: (page) => ({
-        url: `properties?page=${page}`,
-        method: 'GET',
-      }),
-      providesTags: ['properties'],
+      query: () =>({ 
+        url:'admin/properties',
+        method:'GET',
+      })
+      
     }),
     getProperty: builder.query({
-      query: (id) => ({
-        url: `properties/${id}`,
-        method: 'GET',
-      }),
-      providesTags: ['properties'],
+      query: (id) => `properties/${id}`,
     }),
     updateProperty: builder.mutation({
       query: (data) => ({
@@ -42,14 +37,14 @@ const propertyService = createApi({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['properties'],
+      // Invalidates the cache when updating a property
     }),
     deleteProperty: builder.mutation({
       query: (id) => ({
-        url: `properties/delete/${id}`,
+        url: `admin/properties/delete/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['properties'],
+      // Invalidates the cache when deleting a property
     }),
   }),
 });

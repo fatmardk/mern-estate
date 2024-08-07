@@ -29,25 +29,56 @@ const createProperty = async (property) => {
 
 
 const getPropertyById = async (id) => {
-  const [rows] = await connection.execute('SELECT * FROM properties WHERE id = ?', [id]);
-  return rows[0];
+  try {
+    const connection = await connectDB();
+    const [rows] = await connection.execute('SELECT * FROM properties WHERE id = ?', [id]);
+    return rows[0];
+  } catch (error) {
+    console.error('Error fetching property by ID:', error.message);
+    throw new Error('Error fetching property by ID');
+  }
 };
 
+
 const updateProperty = async (id, updates) => {
+  const connection = await connectDB();
   const fields = Object.keys(updates).map(key => `${key} = ?`).join(', ');
   const values = Object.values(updates);
   values.push(id);
 
-  const [result] = await connection.execute(
-    `UPDATE properties SET ${fields} WHERE id = ?`,
-    values
-  );
-  return result;
+  try {
+    const [result] = await connection.execute(
+      `UPDATE properties SET ${fields} WHERE id = ?`,
+      values
+    );
+    return result;
+  } catch (error) {
+    console.error('Error updating property:', error.message);
+    throw new Error('Error updating property');
+  }
 };
 
 const deletePropertyFromModel = async (id) => {
-  const [result] = await connection.execute('DELETE FROM properties WHERE id = ?', [id]);
-  return result;
+  const connection = await connectDB();
+  try {
+    const [result] = await connection.execute('DELETE FROM properties WHERE id = ?', [id]);
+    return result;
+  } catch (error) {
+    console.error('Error deleting property:', error.message);
+    throw new Error('Error deleting property');
+  }
+};
+const getAllProperties = async () => {
+  try {
+    const connection = await connectDB();
+    console.log('Executing query to get all properties...');
+    const [rows] = await connection.execute('SELECT * FROM properties');
+    console.log('Query result:', rows);
+    return rows;
+  } catch (error) {
+    console.error('Error executing query:', error.message);
+    throw new Error('Error fetching properties');
+  }
 };
 
-module.exports = { createProperty, getPropertyById, updateProperty, deletePropertyFromModel };
+module.exports = { createProperty, getPropertyById, updateProperty, deletePropertyFromModel, getAllProperties};
