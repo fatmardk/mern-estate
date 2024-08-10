@@ -33,13 +33,13 @@ const Nav = () => {
             <Link to="#" className="cursor-pointer text-white relative menu">
               Loans
             </Link>
-            <Link to="#" className="cursor-pointer text-white relative menu">
+            <Link to="admin/login" className="cursor-pointer text-white relative menu">
               Sell
             </Link>
-            <Link to="#" className="cursor-pointer text-white relative menu">
+            <Link to="all-property/rent" className="cursor-pointer text-white relative menu">
               Rent
             </Link>
-            <Link to="#" className="cursor-pointer text-white relative menu">
+            <Link to="all-property/buy" className="cursor-pointer text-white relative menu">
               Buy
             </Link>
           </div>

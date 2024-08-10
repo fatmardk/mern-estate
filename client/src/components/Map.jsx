@@ -49,8 +49,8 @@ const Map = ({ onLocationChange, lat, lng }) => {
           {marker && (
             <MarkerF
               position={{
-                lat: marker.lat,
-                lng: marker.lng,
+                lat: parseFloat(marker.lat),
+                lng: parseFloat(marker.lng),
               }}
             />
           )}
