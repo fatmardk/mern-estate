@@ -39,10 +39,10 @@ const propertyService = createApi({
     }),
     
     updateProperty: builder.mutation({
-      query: ({ id, data }) => ({
+      query: ({id,data }) => ({
         url: `admin/properties/edit/${id}`,
         method: 'PUT',
-        body: data,
+        body: JSON.stringify(data),
       }),
       // Optionally add invalidation if required
       // invalidatesTags: ['Property'],

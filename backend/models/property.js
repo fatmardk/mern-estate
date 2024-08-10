@@ -39,27 +39,36 @@ const getPropertyById = async (id) => {
   }
 };
 
-
-const updateProperty = async (id, updates) => {
+const updateProperty = async (id,updates) => {
   const connection = await connectDB();
+  console.log(updates);
+  
+  
   try {
-    // Construct the SET clause dynamically
+    if (Object.keys(updates).length === 0) {
+      throw new Error("No updates provided.");
+    }
+
     const fields = Object.keys(updates).map(key => `${key} = ?`).join(', ');
     const values = [...Object.values(updates), id]; // Append the id to the end of values array
 
-    // Execute the update query
+    console.log('SQL Query:', `UPDATE properties SET ${fields} WHERE id = ?`);
+    console.log('Values:', values);
+
     const [result] = await connection.execute(
       `UPDATE properties SET ${fields} WHERE id = ?`,
       values
     );
 
-    return result; // Return result to check the outcome in controller
+    return result;
   } catch (error) {
     throw new Error(`Error updating property: ${error.message}`);
   } finally {
-    connection.end(); // Ensure connection is closed
+    connection.end();
   }
 };
+
+
 
 
 

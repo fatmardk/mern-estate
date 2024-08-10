@@ -1,17 +1,18 @@
 import React, { useState, useCallback } from "react";
+import { useEffect } from "react";
 import {
   GoogleMap,
   useLoadScript,
   MarkerF,
 } from "@react-google-maps/api";
 
-const Map = ({ onLocationChange }) => {
+const Map = ({ onLocationChange, lat, lng }) => {
   const apiKey = "AIzaSyCrLImoaYlRxEqZhf3ZUKdH1qh_oqDikBE";
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
   });
 
-  const [marker, setMarker] = useState(null);
+  const [marker, setMarker] = useState({lat,lng});
 
   const containerStyle = {
     width: "100%",
@@ -28,6 +29,12 @@ const Map = ({ onLocationChange }) => {
     onLocationChange(newMarker.lat, newMarker.lng);
   }, [onLocationChange]);
 
+  useEffect(() => {
+    if (isLoaded && lat && lng) {
+      setMarker({ lat, lng });
+    }
+  }, [isLoaded, lat, lng]);
+
   return (
     <>
       {!isLoaded ? (
@@ -35,7 +42,7 @@ const Map = ({ onLocationChange }) => {
       ) : (
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={{ lat: 40.74857878612249, lng: -73.98561626666985 }}
+          center={{ lat, lng }}
           zoom={15}
           onClick={handleMapClick}
         >

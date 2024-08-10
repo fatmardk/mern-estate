@@ -16,8 +16,10 @@ const EditProperty = () => {
   console.log("Data:", property);
   console.log("Fetching:", fetching);
 
-  const [updateProperty, { isLoading, isSuccess, error }] =
+  const [updateProperty, error, isSuccess, isLoading] =
     useUpdatePropertyMutation();
+  console.log(error);
+
   const [state, setState] = useState({
     title: "",
     description: "",
@@ -75,7 +77,7 @@ const EditProperty = () => {
     const { name, value, type, checked } = e.target;
     setState({
       ...state,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
     });
   };
 
@@ -108,26 +110,43 @@ const EditProperty = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-  
-    Object.keys(state).forEach((key) => {
-      if (state[key] !== null && state[key] !== "") {
-        if (key === "location") {
-          formData.append("location", JSON.stringify(state.location));
-          formData.append("longitude", state.longitude || "");
-          formData.append("latitude", state.latitude || "");
-        } else {
-          formData.append(key, state[key]);
-        }
-      }
-    });
-  
+
+    formData.append("title", state.title);
+    formData.append("description", state.description);
+    formData.append("address", state.address);
+    formData.append("city", state.city);
+    formData.append("price", state.price);
+    formData.append("bedrooms", state.bedrooms);
+    formData.append("bathrooms", state.bathrooms);
+
+    if (state.image1) formData.append("image1", state.image1);
+    if (state.image2) formData.append("image2", state.image2);
+    if (state.image3) formData.append("image3", state.image3);
+
+    if (
+      state.location
+    ) {
+      formData.append("latitude", parseFloat(state.location.lat));
+      formData.append("longitude", parseFloat(state.location.lng));
+    } else {
+      console.error("Invalid location data");
+    }
+
+    formData.append("furnished", state.furnished ? "1" : "0");
+    formData.append("parking", state.parking ? "1" : "0");
+    formData.append("security", state.security ? "1" : "0");
+
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+
     updateProperty({ id, data: formData });
+    
   };
-  
 
   useEffect(() => {
     if (error) {
-      toast.error(error.message);
+      toast.error(error?.error?.data?.message || "Bir hata oluştu");
     }
   }, [error]);
 
@@ -137,6 +156,7 @@ const EditProperty = () => {
       navigate("/admin/properties");
     }
   }, [isSuccess]);
+  console.log("state", state);
 
   return (
     <>
@@ -376,8 +396,8 @@ const EditProperty = () => {
                 </label>
                 <Map
                   onLocationChange={handleLocationChange}
-                  lat={state.latitude || 40.74857878612249}
-                  lng={state.longitude || -73.98561626666985}
+                  lat={state.location.lat}
+                  lng={state.location.lng}
                 />
               </div>
 
