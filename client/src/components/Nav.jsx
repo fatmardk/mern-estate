@@ -33,13 +33,13 @@ const Nav = () => {
             <Link to="#" className="cursor-pointer text-white relative menu">
               Loans
             </Link>
-            <Link to="admin/login" className="cursor-pointer text-white relative menu">
+            <Link to="/login/admin" className="cursor-pointer text-white relative menu">
               Sell
             </Link>
-            <Link to="all-property/rent" className="cursor-pointer text-white relative menu">
+            <Link to="/all-property/rent" className="cursor-pointer text-white relative menu">
               Rent
             </Link>
-            <Link to="all-property/buy" className="cursor-pointer text-white relative menu">
+            <Link to="/all-property/buy" className="cursor-pointer text-white relative menu">
               Buy
             </Link>
           </div>
@@ -76,9 +76,15 @@ const Nav = () => {
         <div className="md:hidden absolute top-14 left-0 right-0 bg-black bg-opacity-70 p-4">
           <ul className="flex flex-col items-center space-y-4">
             <li className="cursor-pointer text-white relative menu">Loans</li>
-            <li className="cursor-pointer text-white relative menu">Sell</li>
-            <li className="cursor-pointer text-white relative menu">Rent</li>
-            <li className="cursor-pointer text-white relative menu">Buy</li>
+            <Link to="/login-admin" className="cursor-pointer text-white relative menu">
+              Sell
+            </Link>
+            <Link to="/all-property/rent" className="cursor-pointer text-white relative menu">
+              Rent
+            </Link>
+            <Link to="/all-property/buy" className="cursor-pointer text-white relative menu">
+              Buy
+            </Link>
           </ul>
         </div>
       )}

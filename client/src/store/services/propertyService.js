@@ -32,7 +32,7 @@ const propertyService = createApi({
     }),
     getProperty: builder.query({
       query: (id) => ({
-        url: `properties/${id}`,
+        url: `all-property/${id}`,
         method: 'GET',
       }),
       providesTags: ['Property']

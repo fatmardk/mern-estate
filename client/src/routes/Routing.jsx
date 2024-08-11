@@ -11,6 +11,7 @@ import Map from "../components/Map";
 import ViewProperties from "../pages/dashboard/ViewProperties";
 import EditProperty from "../pages/dashboard/EditProperties";
 import ViewProp from "../pages/user/ViewProp";
+import DetailProp from "../pages/user/DetailProp";
 const Routing = () => {
   return (
     <BrowserRouter>
@@ -28,6 +29,7 @@ const Routing = () => {
     <Route path="/admin/properties/edit/:id" element={<EditProperty/>}/>
     <Route path="/all-property/rent" element={<ViewProp/>}/>
     <Route path="/all-property/buy" element={<ViewProp/>}/>
+    <Route path="/all-property/:id" element={<DetailProp/>}/>
     <Route path="/contact" element={<Contact/>}/>
     <Route path="/map" element={<Map />}/>
 

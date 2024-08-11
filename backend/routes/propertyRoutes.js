@@ -9,5 +9,6 @@ router.get('/properties/:id', getProperty);
 router.put('/admin/properties/edit/:id', editProperty);
 router.delete('/admin/properties/delete/:id', deleteProperty);
 router.get('/admin/properties', fetchAllProperties);
+router.get('/all-property/:id', getProperty);
 
 module.exports = router;

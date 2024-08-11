@@ -1,0 +1,46 @@
+/* Custom navigation buttons */
+.custom-prev,
+.custom-next {
+  background-color: rgba(0, 0, 0, 0.5);  /* Yarı şeffaf siyah arka plan */
+  color: #fff;  /* Beyaz ok rengi */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;  /* Daire butonlar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.custom-prev {
+  left: 10px;  /* Sol tarafa yerleştirme */
+}
+
+.custom-next {
+  right: 10px;  /* Sağ tarafa yerleştirme */
+}
+
+.custom-prev:hover,
+.custom-next:hover {
+  background-color: rgba(0, 0, 0, 0.7);  /* Hover olduğunda daha koyu arka plan */
+}
+
+/* Ok ikonu için stil */
+.custom-prev::before,
+.custom-next::before {
+  content: '';  /* Varsayılan ok ikonunu kaldırma */
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  transform: rotate(-135deg);  /* Sol ok */
+}
+
+.custom-next::before {
+  transform: rotate(45deg);  /* Sağ ok */
+}

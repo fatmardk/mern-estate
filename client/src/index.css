@@ -2,4 +2,5 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "../style/Nav.css";
-@import "../style/form.css"
+@import "../style/form.css";
+@import "../style/home.css";
