@@ -1,8 +1,25 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { GoSearch } from "react-icons/go";
 import Nav from "../../components/Nav";
+import { Link } from "react-router-dom";
 
 const UserHome = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <>
       <div
@@ -18,8 +35,14 @@ const UserHome = () => {
               type="text"
               placeholder="Enter an address, neighborhood, city, or ZIP code"
               className="px-4 py-2 w-full text-black outline-none w-96"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
-            <button className="p-2 bg-gray-200 hover:bg-gray-300">
+            <button
+              className="p-2 bg-gray-200 hover:bg-gray-300"
+              onClick={handleSearch}
+            >
               <GoSearch size={25} className="text-black" />
             </button>
           </div>
